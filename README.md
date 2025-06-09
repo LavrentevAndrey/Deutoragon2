@@ -75,7 +75,7 @@
     *   Docker Compose
 
 ## Структура проекта
-
+```
 .
 ├── backend
 │   ├── app
@@ -167,7 +167,7 @@
 │           ├── api_client.cpython-311.pyc
 │           └── __init__.cpython-311.pyc
 └── README.md
-
+```
 
 ## Настройка и запуск
 
