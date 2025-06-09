@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15 # Используйте актуальную версию PostgreSQL
+    container_name: db_security_platform_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-youruser} # Берет из .env или использует значение по умолчанию
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-yourpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-appdb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ # Персистентное хранение данных
+    ports:
+      - "5432:5432" # Проброс порта для локального доступа к БД, если нужно
+    healthcheck: # Проверка состояния БД
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-youruser} -d ${POSTGRES_DB:-appdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: db_security_platform_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app # Монтирование кода для разработки с hot-reload
+    env_file:
+      - .env # Загружаем переменные окружения из .env файла
+    environment:
+      - POSTGRES_SERVER=db # Сервер БД теперь 'db' (имя сервиса в Docker Compose)
+      # Остальные POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB будут взяты из env_file
+      - PYTHONUNBUFFERED=1 # Для немедленного вывода логов Python в Docker
+    depends_on:
+      db:
+        condition: service_healthy # backend запустится только после того, как db будет готов
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload # --reload для разработки
+
+volumes:
+  postgres_data: # Именованный том для данных PostgreSQL
