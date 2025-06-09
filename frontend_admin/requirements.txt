@@ -1,0 +1,4 @@
+streamlit
+requests
+pandas # Для удобного отображения табличных данных
+python-dotenv # Для загрузки URL бэкенда из .env
