@@ -78,58 +78,95 @@
 
 .
 ├── backend
-│ ├── app
-│ │ ├── api
-│ │ │ ├── deps.py # Зависимости FastAPI (аутентификация, сессия БД)
-│ │ │ ├── init.py
-│ │ │ └── v1
-│ │ │ ├── api_v1.py # Агрегатор роутеров v1
-│ │ │ ├── endpoints # Директория с файлами эндпоинтов
-│ │ │ │ ├── clients.py
-│ │ │ │ ├── commands.py
-│ │ │ │ └── events.py
-│ │ │ └── init.py
-│ │ ├── core
-│ │ │ ├── config.py # Настройки приложения (из .env)
-│ │ │ └── security.py # Функции для генерации и проверки API-ключей
-│ │ ├── crud # Функции для CRUD операций с БД
-│ │ │ ├── crud_client.py
-│ │ │ ├── crud_command.py
-│ │ │ └── crud_event.py
-│ │ ├── db
-│ │ │ ├── base_class.py # (Может быть для общей логики моделей SQLModel, если есть)
-│ │ │ ├── database.py # Настройка подключения к БД, создание engine
-│ │ │ └── init_db.py # (Если есть, для инициализации данных в БД)
-│ │ ├── main.py # Главный файл FastAPI приложения
-│ │ ├── models # Модели данных SQLModel (для БД)
-│ │ │ ├── client.py
-│ │ │ ├── command.py
-│ │ │ └── event.py
-│ │ └── schemas # Схемы Pydantic (для валидации API запросов/ответов)
-│ │ ├── client.py
-│ │ ├── command.py
-│ │ ├── event.py
-│ │ └── token.py # (Если используется, для JWT токенов)
-│ ├── Dockerfile # Dockerfile для сборки образа бэкенда
-│ ├── requirements.txt # Зависимости Python для бэкенда
-│ └── tests # (Директория для тестов)
+│   ├── app
+│   │   ├── api
+│   │   │   ├── deps.py
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── deps.cpython-311.pyc
+│   │   │   │   └── __init__.cpython-311.pyc
+│   │   │   └── v1
+│   │   │       ├── api_v1.py
+│   │   │       ├── endpoints
+│   │   │       │   ├── clients.py
+│   │   │       │   ├── commands.py
+│   │   │       │   ├── events.py
+│   │   │       │   └── __pycache__
+│   │   │       │       ├── clients.cpython-311.pyc
+│   │   │       │       ├── commands.cpython-311.pyc
+│   │   │       │       └── events.cpython-311.pyc
+│   │   │       ├── __init__.py
+│   │   │       └── __pycache__
+│   │   │           ├── api_v1.cpython-311.pyc
+│   │   │           └── __init__.cpython-311.pyc
+│   │   ├── core
+│   │   │   ├── config.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── config.cpython-311.pyc
+│   │   │   │   └── security.cpython-311.pyc
+│   │   │   └── security.py
+│   │   ├── crud
+│   │   │   ├── crud_client.py
+│   │   │   ├── crud_command.py
+│   │   │   ├── crud_event.py
+│   │   │   ├── __init__.py
+│   │   │   └── __pycache__
+│   │   │       ├── crud_client.cpython-311.pyc
+│   │   │       ├── crud_command.cpython-311.pyc
+│   │   │       ├── crud_event.cpython-311.pyc
+│   │   │       └── __init__.cpython-311.pyc
+│   │   ├── db
+│   │   │   ├── base_class.py
+│   │   │   ├── database.py
+│   │   │   ├── init_db.py
+│   │   │   ├── __init__.py
+│   │   │   └── __pycache__
+│   │   │       ├── database.cpython-311.pyc
+│   │   │       └── __init__.cpython-311.pyc
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── models
+│   │   │   ├── client.py
+│   │   │   ├── command.py
+│   │   │   ├── event.py
+│   │   │   ├── __init__.py
+│   │   │   └── __pycache__
+│   │   │       ├── client.cpython-311.pyc
+│   │   │       ├── command.cpython-311.pyc
+│   │   │       ├── event.cpython-311.pyc
+│   │   │       └── __init__.cpython-311.pyc
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   └── main.cpython-311.pyc
+│   │   └── schemas
+│   │       ├── client.py
+│   │       ├── command.py
+│   │       ├── event.py
+│   │       ├── __init__.py
+│   │       └── token.py
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── tests
 ├── client_agent_example
-│ ├── client.py # Пример клиентского агента
-│ ├── requirements.txt # Зависимости Python для агента
-│ └── .env # Локальный .env для агента (с API ключом)
-├── docker-compose.yml # Файл Docker Compose для оркестрации сервисов
+│   ├── client.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── docker-compose.yml
 ├── frontend_admin
-│ ├── app.py # Главный файл Streamlit приложения
-│ ├── Dockerfile # Dockerfile для сборки образа фронтенда
-│ ├── pages # Страницы Streamlit приложения
-│ │ ├── 1_Clients_Dashboard.py
-│ │ ├── 2_Events_Log.py
-│ │ └── 3_Command_Control.py
-│ ├── requirements.txt # Зависимости Python для фронтенда
-│ └── utils
-│ └── api_client.py # Утилиты для взаимодействия с API бэкенда
-├── .env # Корневой файл переменных окружения
-└── README.md # Этот файл
+│   ├── app.py
+│   ├── Dockerfile
+│   ├── pages
+│   │   ├── 1_Clients_Dashboard.py
+│   │   ├── 2_Events_Log.py
+│   │   └── 3_Command_Control.py
+│   ├── requirements.txt
+│   └── utils
+│       ├── api_client.py
+│       ├── __init__.py
+│       └── __pycache__
+│           ├── api_client.cpython-311.pyc
+│           └── __init__.cpython-311.pyc
+└── README.md
 
 
 ## Настройка и запуск
