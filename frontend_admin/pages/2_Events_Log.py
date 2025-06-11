@@ -93,12 +93,12 @@ if events_list:
         if st.session_state.event_page_number > 0:
             if st.button("⬅️ Предыдущая страница", key="prev_events"):
                 st.session_state.event_page_number -= 1
-                st.experimental_rerun()
+                st.rerun()
     with col2:
         if len(events_list) == limit_per_page:
             if st.button("Следующая страница ➡️", key="next_events"):
                 st.session_state.event_page_number += 1
-                st.experimental_rerun()
+                st.rerun()
         elif not events_list and st.session_state.event_page_number > 0:
             st.info("Больше нет событий. Возможно, стоит вернуться.")
 
@@ -106,11 +106,11 @@ elif not events_list and st.session_state.event_page_number > 0 :
      st.info("Нет событий на этой странице. Попробуйте вернуться или изменить фильтры.")
      if st.button("⬅️ Вернуться на предыдущую (события)"):
         st.session_state.event_page_number -= 1
-        st.experimental_rerun()
+        st.rerun()
 else:
     st.info("Событий по указанным фильтрам не найдено.")
 
 
 if st.sidebar.button("Применить фильтры и обновить"):
     st.session_state.event_page_number = 0 # Сбрасываем на первую страницу при новых фильтрах
-    st.experimental_rerun()
+    st.rerun()

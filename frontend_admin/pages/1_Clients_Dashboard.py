@@ -30,7 +30,7 @@ with st.expander("Регистрация нового клиента", expanded=
                     # st.session_state.nc_name = ""
                     # st.session_state.nc_os = ""
                     # st.session_state.nc_ip = ""
-                    st.experimental_rerun() # Перезагружаем страницу для обновления списка и очистки
+                    st.rerun() # Перезагружаем страницу для обновления списка и очистки
                 elif client_data:
                      st.error(f"Ошибка при регистрации: {client_data.get('detail', 'Неизвестная ошибка от сервера')}")
                 else:
@@ -66,14 +66,14 @@ if clients_list:
         if st.session_state.client_page_number > 0:
             if st.button("⬅️ Предыдущая страница"):
                 st.session_state.client_page_number -= 1
-                st.experimental_rerun()
+                st.rerun()
     with col2:
         # Для простоты, предполагаем, что если вернулось меньше лимита, то это последняя страница
         # В идеале, API должен возвращать общее количество для точной пагинации
         if len(clients_list) == limit_per_page:
              if st.button("Следующая страница ➡️"):
                 st.session_state.client_page_number += 1
-                st.experimental_rerun()
+                st.rerun()
         elif not clients_list and st.session_state.client_page_number > 0: # Если на текущей странице нет данных, а мы не на первой
             st.info("Больше нет клиентов. Возможно, стоит вернуться на предыдущую страницу.")
 
@@ -104,9 +104,9 @@ elif not clients_list and st.session_state.client_page_number > 0:
     st.info("Нет клиентов на этой странице. Попробуйте вернуться на предыдущую.")
     if st.button("⬅️ Вернуться на предыдущую страницу"):
         st.session_state.client_page_number -= 1
-        st.experimental_rerun()
+        st.rerun()
 elif not clients_list:
      st.info("Пока нет зарегистрированных клиентов.")
 
 if st.button("Обновить список клиентов"):
-    st.experimental_rerun()
+    st.rerun()

@@ -64,7 +64,7 @@ with st.expander("Создать новую команду", expanded=False):
                 if command_data:
                     st.success(f"Команда ID '{command_data.get('id')}' успешно создана для клиента '{selected_client_name_cmd}'.")
                     st.json(command_data)
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error("Не удалось создать команду. Проверьте правильность введенных данных и логи сервера.")
 
@@ -130,12 +130,12 @@ if commands_list:
         if st.session_state.command_page_number > 0:
             if st.button("⬅️ Предыдущая страница", key="prev_commands"):
                 st.session_state.command_page_number -= 1
-                st.experimental_rerun()
+                st.rerun()
     with col2_cmd:
         if len(commands_list) == limit_cmd_per_page:
             if st.button("Следующая страница ➡️", key="next_commands"):
                 st.session_state.command_page_number += 1
-                st.experimental_rerun()
+                st.rerun()
         elif not commands_list and st.session_state.command_page_number > 0:
              st.info("Больше нет команд. Возможно, стоит вернуться.")
 
@@ -168,11 +168,11 @@ elif not commands_list and st.session_state.command_page_number > 0:
     st.info("Нет команд на этой странице. Попробуйте вернуться или изменить фильтры.")
     if st.button("⬅️ Вернуться на предыдущую (команды)"):
         st.session_state.command_page_number -= 1
-        st.experimental_rerun()
+        st.rerun()
 else:
     st.info("Команд по указанным фильтрам не найдено.")
 
 
 if st.sidebar.button("Применить фильтры и обновить список команд"):
     st.session_state.command_page_number = 0 # Сбрасываем на первую страницу
-    st.experimental_rerun()
+    st.rerun()
