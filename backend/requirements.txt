@@ -4,4 +4,4 @@ sqlmodel
 psycopg2-binary  # Драйвер для PostgreSQL
 python-dotenv    # Для загрузки переменных окружения из .env файла
 pydantic-settings # Для удобного управления настройками через переменные окружения
-passlib[bcrypt] # Для хеширования API ключей или паролейfastapi
+bcrypt

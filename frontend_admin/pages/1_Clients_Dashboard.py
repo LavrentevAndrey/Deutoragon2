@@ -25,11 +25,6 @@ with st.expander("Регистрация нового клиента", expanded=
                     st.success(f"Клиент '{client_data.get('client_name')}' успешно зарегистрирован!")
                     st.info(f"ID клиента: {client_data.get('id')}")
                     st.warning(f"ВАЖНО: Сохраните этот API ключ. Он отображается только один раз: `{client_data.get('api_key')}`")
-                    # Очищаем поля формы (Streamlit не делает это автоматически для text_input внутри form после успеха)
-                    # Можно использовать session_state для сброса, но для простоты пока оставим так.
-                    # st.session_state.nc_name = ""
-                    # st.session_state.nc_os = ""
-                    # st.session_state.nc_ip = ""
                     st.rerun() # Перезагружаем страницу для обновления списка и очистки
                 elif client_data:
                      st.error(f"Ошибка при регистрации: {client_data.get('detail', 'Неизвестная ошибка от сервера')}")
