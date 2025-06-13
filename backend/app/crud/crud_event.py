@@ -8,9 +8,8 @@ from app.models.client import Client # Для type hinting
 
 def create_event(session: Session, *, event_in: SecurityEventCreate, client: Client) -> SecurityEvent:
     """Создает новое событие безопасности, привязанное к клиенту."""
-    db_event = SecurityEvent.model_validate(event_in) # Используем model_validate для Pydantic v2+
-    db_event.client_id = client.id
-    # db_event.timestamp устанавливается по умолчанию в модели или может быть передан в event_in
+    event_data = event_in.model_dump()
+    db_event = SecurityEvent(**event_data, client_id=client.id)
     session.add(db_event)
     session.commit()
     session.refresh(db_event)
@@ -19,12 +18,14 @@ def create_event(session: Session, *, event_in: SecurityEventCreate, client: Cli
 def create_multiple_events(session: Session, *, events_in: List[SecurityEventCreate], client: Client) -> List[SecurityEvent]:
     """Создает несколько событий безопасности для одного клиента."""
     db_events = []
-    for event_in in events_in:
-        db_event = SecurityEvent.model_validate(event_in)
-        db_event.client_id = client.id
+    for event_in_item in events_in:
+        event_data = event_in_item.model_dump()
+        db_event = SecurityEvent(**event_data, client_id=client.id)
         session.add(db_event)
         db_events.append(db_event)
+
     session.commit()
+    
     for db_event in db_events: # Обновляем каждый объект после коммита, чтобы получить ID и т.д.
         session.refresh(db_event)
     return db_events
